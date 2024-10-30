@@ -282,6 +282,14 @@ install_x-ui() {
     echo -e "----------------------------------------------"
 }
 
+add_cron() {
+    echo -e "Setting up weekly reboot in cron..."
+    # Добавляем задание в crontab для перезагрузки каждую субботу в 3:00 утра
+    (crontab -l 2>/dev/null; echo "0 3 * * 6 /sbin/reboot") | crontab -
+    echo -e "Cron job for weekly reboot has been set."
+}
+
 echo -e "${green}Running...${plain}"
 install_base
 install_x-ui $1
+add_cron
